@@ -1,12 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './views/login/login.component';
-import { DashboardComponent } from './views/dashboard/dashboard.component';
+import { AuthGuard } from './guards/auth.guard';
+// import { DashboardComponent } from './views/dashboard/dashboard.component';
 
 const routes: Routes = [
   {path: '', pathMatch: 'full', redirectTo: 'login'},
   {path: 'login', component: LoginComponent},
-  {path: 'dashboard', component: DashboardComponent}
+  {path: 'dashboard' , loadChildren: ()=> import('./views/dashboard/dashboard.module').then((m) => m.DashboardModule)}
 ];
 
 @NgModule({

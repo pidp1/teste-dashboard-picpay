@@ -10,9 +10,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   imports: [
     CommonModule,
     MaterialModule,
-    FormsModule,
     ReactiveFormsModule,
-    NgModule,
   ]
 })
 export class LoginModule { }
