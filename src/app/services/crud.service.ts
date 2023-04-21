@@ -2,38 +2,34 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { API_PATH } from 'src/environments/environment';
 import { IPagamentos } from '../models/IPagamentos';
+import { Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CrudService {
-  
+  constructor(private httpClient: HttpClient) {}
 
-  constructor(private httpClient: HttpClient) { }
-  
-
-  getAllPayments(){
-    return this.httpClient.get<IPagamentos[]>(`${API_PATH}payments`).subscribe(
-      {
-        next: (dataPayments)=>{console.log(dataPayments)},
-        error: (error)=>{console.error(error)}
-      }
-    )
+  public executeLogin(username: string, password: string):Observable<any>{
+    return this.httpClient.post(`${API_PATH}auth/login`, { username, password });
   }
 
-  updatePayment(){
-
+  getAllPayments() {
+    return this.httpClient.get<IPagamentos[]>(`${API_PATH}payments`).subscribe({
+      next: (dataPayments) => {
+        console.log(dataPayments);
+      },
+      error: (error) => {
+        console.error(error);
+      },
+    });
   }
 
-  getPaymentById(){
+  updatePayment() {}
 
-  }
+  getPaymentById() {}
 
-  updatePaymentById(){
+  updatePaymentById() {}
 
-  }
-
-  deletePaymentById(){
-
-  }
+  deletePaymentById() {}
 }

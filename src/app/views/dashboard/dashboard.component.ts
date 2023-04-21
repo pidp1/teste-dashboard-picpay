@@ -2,6 +2,7 @@ import {AfterViewInit, Component, ViewChild} from '@angular/core';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
+import { Router } from '@angular/router';
 
 export interface UserData {
   id: string;
@@ -58,7 +59,7 @@ export class DashboardComponent implements AfterViewInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor() {
+  constructor( private router: Router) {
     // Create 100 users
     const users = Array.from({length: 100}, (_, k) => createNewUser(k + 1));
 
@@ -71,6 +72,12 @@ export class DashboardComponent implements AfterViewInit {
     this.dataSource.sort = this.sort;
   }
 
+  logout(){
+    this.router.navigate(['/login'])
+    localStorage.clear();
+    console.log('logout feito, localStorage limpo')
+  }
+
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
@@ -79,6 +86,8 @@ export class DashboardComponent implements AfterViewInit {
       this.dataSource.paginator.firstPage();
     }
   }
+
+  
 }
 
 /** Builds and returns a new User. */
@@ -95,4 +104,7 @@ function createNewUser(id: number): UserData {
     progress: Math.round(Math.random() * 100).toString(),
     fruit: FRUITS[Math.round(Math.random() * (FRUITS.length - 1))],
   };
+
+  
 }
+

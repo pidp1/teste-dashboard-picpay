@@ -8,8 +8,8 @@ import { LoginComponent } from './views/login/login.component';
 
 import { MaterialModule } from './shared/material/material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
-import { AuthInterceptorProvider } from './services/auth.interceptor';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { AuthInterceptor} from './services/auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -26,7 +26,13 @@ import { AuthInterceptorProvider } from './services/auth.interceptor';
     HttpClientModule,
     ReactiveFormsModule
   ],
-  providers: [AuthInterceptorProvider],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true,
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -14,18 +14,18 @@ export class AuthInterceptor implements HttpInterceptor {
 
   constructor(private loginService: LoginService) {}
 
-  intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
+  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-    request = request.clone({
-      headers: request.headers.set('authorization', this.loginService.token)
-    })
+    const apiToken = this.loginService.getToken()
+
+    if(apiToken !== null){
+
+      const authRequest = request.clone({setHeaders: {'Autorization': `Bearer ${apiToken}`}})
+      return next.handle(authRequest)
+
+    }
 
     return next.handle(request);
 
   }
 }
-export const AuthInterceptorProvider = {
-  provide: HTTP_INTERCEPTORS,
-  useClass: AuthInterceptor,
-  multi: true,
-};

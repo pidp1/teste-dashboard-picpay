@@ -3,15 +3,14 @@
     <div class="header">
       <h2>Conecte-se</h2>
     </div>
-    <form   autocomplete="off">
+    <form (ngSubmit)="submitForm()" [formGroup]="form" autocomplete="off">
       <div class="username-input">
         <mat-form-field>
           <mat-label>Username</mat-label>
           <input
-            
+            formControlName="username"
             name="username"
             type="text"
-            
             matInput
             placeholder="username"
           />
@@ -22,19 +21,18 @@
         <mat-form-field>
           <mat-label>Password</mat-label>
           <input
-            
+            formControlName="password"
             name="password"
             matInput
             type="password"
             placeholder="password"
-            
           />
         </mat-form-field>
       </div>
 
       <div class="div-btn">
         <button
-          (click)="login()"
+          type="submit"
           mat-raised-button
           color="primary"
           class="btn-submit"

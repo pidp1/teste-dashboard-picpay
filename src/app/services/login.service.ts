@@ -1,38 +1,31 @@
 import { Injectable } from '@angular/core';
-import { RequestLogin } from '../models/requestLogin';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { API_PATH } from 'src/environments/environment';
+import { tap } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
+import { CrudService } from './crud.service';
 import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
 })
 export class LoginService {
+  private _isLoggedIn$ = new BehaviorSubject<boolean>(false);
+  private readonly TOKEN_NAME = 'token';
+  isLoggedIn$ = this._isLoggedIn$.asObservable();
   
-  public requestLogin: RequestLogin = new RequestLogin();
-  private readonly TOKEN_NAME = 'token'
 
-  constructor(private httpClient: HttpClient, private router: Router) {}
-
-  public executeLogin(requestLogin: RequestLogin): Observable<any> {
-    return this.httpClient.post(`${API_PATH}auth/login`, requestLogin);
+  constructor(private crudService: CrudService, private router: Router) {
+    this._isLoggedIn$.next(!!this.getToken);
   }
 
-  public sendLoginInfo(): void {
-    this.executeLogin(this.requestLogin).subscribe({
-      next: (response) => {
-        console.log(response);
-        localStorage.setItem(this.TOKEN_NAME, response.access_token);
-      },
-      error: (error) => {
-        console.error(error);
-      },
-    });
+  login(username: string, password: string) {
+    return this.crudService.executeLogin(username, password).pipe(
+      tap((response: any) => {
+        this.router.navigate(['/dashboard']);
+        this._isLoggedIn$.next(true);
+      })
+    );
   }
-
-  get token(){
-    return localStorage.getItem(this.TOKEN_NAME)!
+   getToken() {
+    return localStorage.getItem(this.TOKEN_NAME)!;
   }
 }
-

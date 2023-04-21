@@ -1,46 +1,44 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { RequestLogin } from 'src/app/models/requestLogin';
+import { CrudService } from 'src/app/services/crud.service';
 import { LoginService } from 'src/app/services/login.service';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
-  
-  public requestLogin: RequestLogin = new RequestLogin;
+  // public requestLogin: RequestLogin = new RequestLogin();
+  form = new FormGroup({
+    username: new FormControl(null, Validators.required),
+    password: new FormControl(null, Validators.required),
+  });
 
-  constructor(
-    private loginService: LoginService,
-    private router: Router
-    ) {
 
-  }
-  
+  constructor(private loginService: LoginService, 
+    private router: Router, 
+    private crudService: CrudService) {
+
+    }
+
   ngOnInit(): void {
-    this.requestLogin = new RequestLogin();
+    
   }
+  submitForm() {
+    if (this.form.invalid) {
+      return;
+    }
 
-  login(){
-    this.loginService.executeLogin
-    this.router.navigate(['dashboard'])
-
+    this.crudService
+      .executeLogin(this.form.get('username')?.value!, this.form.get('password')?.value!)
+      .subscribe((response) => {
+        console.log(response)
+        localStorage.setItem('token', response.access_token)
+        this.router.navigate(['/dashboard']);
+      });
   }
-
-  // public sendLoginInfo() :void {
-  //   this.loginService.executeLogin(this.requestLogin).subscribe(
-  //     data=>{
-  //     console.log(data)
-
-  //     localStorage.setItem('token', data.access_token)
-  //     this.router.navigate(['dashboard'])
-  //   },
-  //   error => {
-  //     console.error(error)
-  //   })
-  // }
-
-  
 }
+
