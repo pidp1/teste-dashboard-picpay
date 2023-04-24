@@ -24,5 +24,5 @@ Para desenvolver o projeto utilizamos uma stack de tecnologias compatíveis com 
 
 ou
 
--
+
 
