@@ -1,28 +1,28 @@
-# DashboardPagamentosPicpay
+# Dashboard Picpay
+ Porjeto desenvolvido como teste para o processo seletivo do Picpay
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.2.6.
+---
+## Tecnologias 
 
-## Development server
+Para desenvolver o projeto utilizamos uma stack de tecnologias compatíveis com o que o cliente já tinha em produção.
+  
+   ![Angular](https://img.shields.io/badge/angular-%23DD0031.svg?style=for-the-badge&logo=angular&logoColor=white)
+   - Como framework de desenvolvimento front-end. Foram utilizados amplamente recursos do Angular Material também.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+---
 
-## Code scaffolding
+## Principais Features
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+- Login utilizando a autenticação da API fornecida
+- Adicionar, editar e excluir chamados 
+- Dashboard que expõe os dados presentes na API consumindo a mesma no CRUD do projeto
 
-## Build
+## Para executar o projeto
+- baixe ou clone o repositório para um diretório local;
+- Rodar comando 'npm install' para instalar as dependências;
+- rodar comando 'ng s -o' para iniciar o servidor local
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+ou
 
-## Running unit tests
+-
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
-# teste-dashboard-picpay
