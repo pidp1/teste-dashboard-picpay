@@ -10,11 +10,15 @@ import { MaterialModule } from './shared/material/material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AuthInterceptor} from './services/auth.interceptor';
+import { EditarPagamentoComponent } from './components/editar-pagamento/editar-pagamento.component';
+import { NovoPagamentoComponent } from './components/novo-pagamento/novo-pagamento.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
+    EditarPagamentoComponent,
+    NovoPagamentoComponent,
     
   ],
   imports: [

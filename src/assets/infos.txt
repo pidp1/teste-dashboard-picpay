@@ -1,0 +1,9 @@
+date: "2023-04-20T03:00:00.000Z"
+firstName: "Gabriel"
+isPayed: false
+lastName: "Costa"
+title: "Desenvolvedor Full-stack"
+username: "gabrielfernans"
+value: 1000
+__v: 0
+_id: "643e37455a9f79005b6cb5f4"

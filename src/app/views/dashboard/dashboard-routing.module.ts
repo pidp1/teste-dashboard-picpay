@@ -1,9 +1,14 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { DashboardComponent } from './dashboard.component';
+import { EditarPagamentoComponent } from 'src/app/components/editar-pagamento/editar-pagamento.component';
 
 const routes: Routes = [
-  {path: '', component: DashboardComponent}
+  {path: '', component: DashboardComponent},
+  {
+    path: 'editar/:id',
+    component: EditarPagamentoComponent
+  }
 ];
 
 @NgModule({

@@ -1,0 +1,38 @@
+<h1 mat-dialog-title class="titulo-dialog" >Adicionar novo pagamento</h1>
+
+
+<div mat-dialog-content class="main-container" [formGroup]="formNovoPagamento" (ngSubmit)="criarNovoPagamento()"  >
+
+    <mat-form-field class="fields" appearance="fill">
+        <mat-label>Usuário</mat-label>
+        <input matInput name="username"  formControlName="username">
+      </mat-form-field>
+
+      <mat-form-field class="fields" appearance="fill">
+        <mat-label>Título</mat-label>
+        <input matInput name="title"  formControlName="title">
+      </mat-form-field>
+
+      <mat-form-field class="fields" appearance="fill">
+        <mat-label>Data - MM/DD/YYYY</mat-label>
+        <input matInput [matDatepicker]="picker" name="date"  formControlName="date">
+        <!-- <mat-hint>MM/DD/YYYY</mat-hint> -->
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field class="fields" appearance="fill">
+        <mat-label>Valor</mat-label>
+        <input matInput name="value"  formControlName="value">
+      </mat-form-field>
+
+      <div>
+        <button class="save-btn" mat-raised-button color="primary">Salvar</button>
+      </div>
+    
+</div>
+
+
+<div mat-dialog-actions>
+  <button mat-button mat-dialog-close >Close</button>
+</div>

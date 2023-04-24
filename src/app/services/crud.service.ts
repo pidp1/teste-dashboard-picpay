@@ -14,22 +14,24 @@ export class CrudService {
     return this.httpClient.post(`${API_PATH}auth/login`, { username, password });
   }
 
-  getAllPayments() {
-    return this.httpClient.get<IPagamentos[]>(`${API_PATH}payments`).subscribe({
-      next: (dataPayments) => {
-        console.log(dataPayments);
-      },
-      error: (error) => {
-        console.error(error);
-      },
-    });
+  public createPayment(payment: IPagamentos){
+    return this.httpClient.post<IPagamentos>(`${API_PATH}payments`, payment)
   }
 
-  updatePayment() {}
+  public getAllPayments(): Observable<any> {
+    return this.httpClient.get<any[]>(`${API_PATH}payments`)
+  }
 
-  getPaymentById() {}
 
-  updatePaymentById() {}
+  public getPaymentById(id:string) {
+    return this.httpClient.get<any>(`${API_PATH}payments/${id}`)
+  }
 
-  deletePaymentById() {}
+  public updatePaymentById(id: string, payment: any) {
+    return this.httpClient.put<IPagamentos>(`${API_PATH}payments/${id}`, payment)
+  }
+
+  public deletePaymentById(id:string) {
+    return this.httpClient.delete(`${API_PATH}payments/${id}`)
+  }
 }

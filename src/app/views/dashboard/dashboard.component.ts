@@ -1,110 +1,104 @@
-import {AfterViewInit, Component, ViewChild} from '@angular/core';
-import {MatPaginator} from '@angular/material/paginator';
-import {MatSort} from '@angular/material/sort';
-import {MatTableDataSource} from '@angular/material/table';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
+import { LoginService } from 'src/app/services/login.service';
+import { LoginComponent } from '../login/login.component';
+import { CrudService } from 'src/app/services/crud.service';
+import { IPagamentos } from 'src/app/models/IPagamentos';
+import { MatDialog } from '@angular/material/dialog';
+import { NovoPagamentoComponent } from 'src/app/components/novo-pagamento/novo-pagamento.component';
+import { EditarPagamentoComponent } from 'src/app/components/editar-pagamento/editar-pagamento.component';
 
-export interface UserData {
-  id: string;
-  name: string;
-  progress: string;
-  fruit: string;
-}
-
-/** Constants used to fill up our data base. */
-const FRUITS: string[] = [
-  'blueberry',
-  'lychee',
-  'kiwi',
-  'mango',
-  'peach',
-  'lime',
-  'pomegranate',
-  'pineapple',
-];
-const NAMES: string[] = [
-  'Maia',
-  'Asher',
-  'Olivia',
-  'Atticus',
-  'Amelia',
-  'Jack',
-  'Charlotte',
-  'Theodore',
-  'Isla',
-  'Oliver',
-  'Isabella',
-  'Jasper',
-  'Cora',
-  'Levi',
-  'Violet',
-  'Arthur',
-  'Mia',
-  'Thomas',
-  'Elizabeth',
-];
-
-/**
- * @title Data table with sorting, pagination, and filtering.
- */
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.css']
+  styleUrls: ['./dashboard.component.css'],
 })
-export class DashboardComponent implements AfterViewInit {
-  displayedColumns: string[] = ['id', 'name', 'progress', 'fruit'];
-  dataSource: MatTableDataSource<UserData>;
+export class DashboardComponent implements OnInit {
+  displayedColumns: string[] = [
+    'data',
+    'firstName',
+    'lastName',
+    'isPayed',
+    'title',
+    'username',
+    'value',
+    'editar',
+  ];
 
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  listPayments: IPagamentos[] = [];
+
+  dataSource: any = [];
+
+  @ViewChild(MatPaginator) paginator?: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
+  constructor(
+    private router: Router,
+    private loginService: LoginService,
+    private crudService: CrudService,
+    public dialog: MatDialog
+  ) {}
 
-  constructor( private router: Router) {
-    // Create 100 users
-    const users = Array.from({length: 100}, (_, k) => createNewUser(k + 1));
-
-    // Assign the data to the data source for the table to render
-    this.dataSource = new MatTableDataSource(users);
-  }
-
-  ngAfterViewInit() {
+  ngOnInit(): void {
+    this.initializeFields();
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
 
-  logout(){
-    this.router.navigate(['/login'])
+  initializeFields() {
+    this.crudService.getAllPayments().subscribe({
+      next: (pagamentos) => {
+        console.log(pagamentos.items);
+        this.listPayments = pagamentos.items;
+        console.log(this.listPayments);
+        this.dataSource = new MatTableDataSource<IPagamentos>(
+          this.listPayments
+        );
+        this.dataSource.sort = this.sort;
+        if (this.paginator) {
+          this.dataSource.paginator = this.paginator;
+        }
+      },
+      error: (error) => {
+        console.error(error);
+      },
+    });
+  }
+
+  openDialog() {
+    this.dialog.open(NovoPagamentoComponent);
+  }
+
+
+  checkLogin() {
+    console.log(this.loginService.isLoggedIn$);
+  }
+
+  logout() {
+    this.router.navigate(['/login']);
     localStorage.clear();
-    console.log('logout feito, localStorage limpo')
+    console.log('logout feito, localStorage limpo');
+    this.loginService.statusLogIn();
+    console.log(this.loginService.isLoggedIn$);
+  }
+
+  getPayments() {
+    this.crudService.getAllPayments().subscribe({
+      next: (dataPayments) => {
+        console.log(dataPayments);
+      },
+      error: (error) => {
+        console.error(error);
+      },
+    });
   }
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
-
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
   }
 
-  
+  deletarPagamento() {}
 }
-
-/** Builds and returns a new User. */
-function createNewUser(id: number): UserData {
-  const name =
-    NAMES[Math.round(Math.random() * (NAMES.length - 1))] +
-    ' ' +
-    NAMES[Math.round(Math.random() * (NAMES.length - 1))].charAt(0) +
-    '.';
-
-  return {
-    id: id.toString(),
-    name: name,
-    progress: Math.round(Math.random() * 100).toString(),
-    fruit: FRUITS[Math.round(Math.random() * (FRUITS.length - 1))],
-  };
-
-  
-}
-

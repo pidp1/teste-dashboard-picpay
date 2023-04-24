@@ -1,7 +1,11 @@
 export interface IPagamentos {
-    usuario: string,
-    titulo: string,
-    data: Date,
-    valor: number,
-    pago: boolean
+    date?: Date,
+    firstName?: string,
+    isPayed?: boolean
+    lastName?: string,
+    title?: string,
+    username?: string,
+    value?: number,
+    __v?: number
+    id?: string,
 }

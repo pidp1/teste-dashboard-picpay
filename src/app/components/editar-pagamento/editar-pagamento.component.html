@@ -1,0 +1,43 @@
+<div class="main-flex">
+  <mat-card>
+    <mat-card-content>
+<h1 class="titulo-dialog">Editar pagamento</h1>
+
+
+<div class="main-container">
+<form  [formGroup]="payForm" (ngSubmit)="update()" >
+    <mat-form-field class="fields" appearance="fill">
+        <mat-label>Usuário</mat-label>
+        <input matInput name="username"  formControlName="username" required>
+      </mat-form-field>
+
+      <mat-form-field class="fields" appearance="fill">
+        <mat-label>Título</mat-label>
+        <input matInput name="title"  formControlName="title" required>
+      </mat-form-field>
+
+      <mat-form-field class="fields" appearance="fill">
+        <mat-label>Data - MM/DD/YYYY</mat-label>
+        <input matInput [matDatepicker]="picker" name="date"  formControlName="date" required>
+        <!-- <mat-hint>MM/DD/YYYY</mat-hint> -->
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field class="fields" appearance="fill">
+        <mat-label>Valor</mat-label>
+        <input matInput name="value"  formControlName="value" required>
+      </mat-form-field>
+
+    
+
+      <div>
+        <button type="submit" class="save-btn" mat-raised-button color="primary">Salvar</button>
+        
+      </div>
+    </form>
+</div>
+</mat-card-content>
+
+</mat-card>
+</div>

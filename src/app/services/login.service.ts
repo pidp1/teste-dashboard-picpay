@@ -8,24 +8,15 @@ import { Router } from '@angular/router';
   providedIn: 'root',
 })
 export class LoginService {
-  private _isLoggedIn$ = new BehaviorSubject<boolean>(false);
-  private readonly TOKEN_NAME = 'token';
-  isLoggedIn$ = this._isLoggedIn$.asObservable();
-  
+  isLoggedIn$ = false;
 
-  constructor(private crudService: CrudService, private router: Router) {
-    this._isLoggedIn$.next(!!this.getToken);
+  statusLogIn() {
+   return this.isLoggedIn$ = !!localStorage.getItem('token');
   }
 
-  login(username: string, password: string) {
-    return this.crudService.executeLogin(username, password).pipe(
-      tap((response: any) => {
-        this.router.navigate(['/dashboard']);
-        this._isLoggedIn$.next(true);
-      })
-    );
+  getToken() {
+    return localStorage.getItem('token');
   }
-   getToken() {
-    return localStorage.getItem(this.TOKEN_NAME)!;
-  }
+
+  constructor() {}
 }

@@ -1,0 +1,23 @@
+.main-container{
+    display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+}
+.titulo-dialog{
+    text-align: center;
+    font-size:1.5rem ;
+    font-weight: bold;
+    margin: 15px;
+    width: 75vh;
+}
+
+.fields{
+    width: 100%;
+}
+
+.save-btn{
+    margin-top: 15px;
+    width: 25vh;
+}
+
