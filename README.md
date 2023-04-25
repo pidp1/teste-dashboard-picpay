@@ -24,4 +24,5 @@ Para desenvolver o projeto utilizamos uma stack de tecnologias compatíveis com 
 
 ou
 
+- Acesse o app em produção pelo link: https://teste-dashboard-picpay.vercel.app/login
   

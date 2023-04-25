@@ -4,12 +4,11 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { LoginService } from 'src/app/services/login.service';
-import { LoginComponent } from '../login/login.component';
 import { CrudService } from 'src/app/services/crud.service';
 import { IPagamentos } from 'src/app/models/IPagamentos';
 import { MatDialog } from '@angular/material/dialog';
 import { NovoPagamentoComponent } from 'src/app/components/novo-pagamento/novo-pagamento.component';
-import { EditarPagamentoComponent } from 'src/app/components/editar-pagamento/editar-pagamento.component';
+
 
 @Component({
   selector: 'app-dashboard',
@@ -68,13 +67,16 @@ export class DashboardComponent implements OnInit {
   }
 
   openDialog() {
-    this.dialog.open(NovoPagamentoComponent);
+    const dialogRef = this.dialog.open(NovoPagamentoComponent);
+    dialogRef.afterClosed().subscribe({
+      next: (val)=>{
+        if (val){
+          this.initializeFields()
+        }
+      }
+    })
   }
 
-
-  checkLogin() {
-    console.log(this.loginService.isLoggedIn$);
-  }
 
   logout() {
     this.router.navigate(['/login']);
@@ -84,21 +86,19 @@ export class DashboardComponent implements OnInit {
     console.log(this.loginService.isLoggedIn$);
   }
 
-  getPayments() {
-    this.crudService.getAllPayments().subscribe({
-      next: (dataPayments) => {
-        console.log(dataPayments);
-      },
-      error: (error) => {
-        console.error(error);
-      },
-    });
-  }
+  
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  deletarPagamento() {}
+  deletarPagamento(id: string) {
+    this.crudService.deletePaymentById(id).subscribe({
+      next: (res) => {
+        alert('pagamento apagado com sucesso')
+        this.initializeFields()
+      }
+    })
+  }
 }
