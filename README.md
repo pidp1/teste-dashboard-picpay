@@ -21,6 +21,7 @@ Para desenvolver o projeto utilizamos uma stack de tecnologias compatíveis com 
 - baixe ou clone o repositório para um diretório local;
 - Rodar comando 'npm install' para instalar as dependências;
 - rodar comando 'ng s -o' para iniciar o servidor local
+- OU acesse o em produção pelo link https://teste-dashboard-picpay.vercel.app/login
 
 
 
